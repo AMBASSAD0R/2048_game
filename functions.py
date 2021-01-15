@@ -17,7 +17,7 @@ def enumerate_mas(i, j):
     return i * 4 + j + 1
 
 
-def get_index_from_number(num):
+def index_from_number(num):
     """получение индекса элемента по данному элементу (x, y)"""
     num -= 1
     x, y = num // 4, num % 4
@@ -33,8 +33,8 @@ def add_2_or_4(mas, x, y):
     return mas
 
 
-def is_empty(mas):
-    """проверка пустоты массива"""
+def empty_positions(mas):
+    """возвращает номера элементов, которые не заполнены"""
     empty_pos = []
     for i in range(4):
         for j in range(4):
@@ -44,7 +44,7 @@ def is_empty(mas):
 
 
 def is_full(mas):
-    """проверка полноты массива"""
+    """проверка заполнен массив или нет"""
     for row in mas:
         for elem in row:
             if elem == 0:
@@ -135,7 +135,7 @@ def move_down(mas):
 
 
 def is_move_available(mas):
-    """проверка на возможность хода"""
+    """проверка на возможности хода"""
     for i in range(3):
         for j in range(3):
             if mas[i][j] == mas[i][j + 1] or mas[i][j] == mas[i + 1][j]:

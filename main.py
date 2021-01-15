@@ -7,7 +7,7 @@ import os
 
 import pygame
 
-from functions import is_empty, beauty_print, get_index_from_number, add_2_or_4, is_full, move_left, move_right, \
+from functions import empty_positions, beauty_print, index_from_number, add_2_or_4, is_full, move_left, move_right, \
     move_up, move_down, is_move_available, is_available_name
 
 from database import get_best, insert_result
@@ -38,12 +38,12 @@ def init_game():
         [0, 0, 0, 0],
     ]
 
-    empty = is_empty(field)
+    empty = empty_positions(field)
     random.shuffle(empty)
     random_num1 = empty.pop()
     random_num2 = empty.pop()
-    x1, y1 = get_index_from_number(random_num1)
-    x2, y2 = get_index_from_number(random_num2)
+    x1, y1 = index_from_number(random_num1)
+    x2, y2 = index_from_number(random_num2)
     field = add_2_or_4(field, x1, y1)
     field = add_2_or_4(field, x2, y2)
 
@@ -59,12 +59,12 @@ def draw_top_gamers():
 
     screen.blit(text_head, (270, 5))
 
-    for ind, gamer in enumerate(GAMERS_DB):
+    for index, gamer in enumerate(GAMERS_DB):
         name, score = gamer
-        s = f'{ind + 1}. {name} - {score}'
+        s = f'{index + 1}. {name} - {score}'
         text_gamer = font_gamer.render(s, True, TEXT_COLOR)
-        screen.blit(text_gamer, (290, 35 + 25 * ind))
-        print(ind, name, score)
+        screen.blit(text_gamer, (290, 35 + 25 * index))
+        print(index, name, score)
 
 
 def draw_follow():
@@ -204,10 +204,10 @@ def game_loop():
                     draw_gameover()
                 score += delta
                 if is_full(field) and is_field_moved:
-                    empty = is_empty(field)
+                    empty = empty_positions(field)
                     random.shuffle(empty)
                     random_num = empty.pop()
-                    x, y = get_index_from_number(random_num)
+                    x, y = index_from_number(random_num)
                     field = add_2_or_4(field, x, y)
                     print(f'Заполнен элемент под помером {random_num}')
                     is_field_moved = False
@@ -331,7 +331,7 @@ TITLE = pygame.Rect(0, 0, WIDTH, 110)  # вверхняя часть окна и
 SIZE = WIDTH, HEIGHT  # (445, 555)
 
 # вывод состояния игры в консоль
-print(is_empty(field))
+print(empty_positions(field))
 beauty_print(field)
 
 pygame.init()
